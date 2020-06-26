@@ -57,11 +57,18 @@ class _AnimatedCurrentWeatherState extends State<AnimatedCurrentWeather>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Center(
-      child: Text(
-        "$_number",
-        style: textTheme.headline1.copyWith(fontWeight: FontWeight.bold),
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "$_number",
+          style: textTheme.headline1.copyWith(fontWeight: FontWeight.bold),
+        ),
+        Text(
+          "\u2103",
+          style: textTheme.headline3,
+        )
+      ],
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/widgets/animated_current_weather.dart';
+import 'package:weather/widgets/weekly_weather_row.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -14,13 +15,14 @@ class HomePage extends StatelessWidget {
           children: [
             Expanded(
               flex: 5,
-              child: AnimatedCurrentWeather(
-                toValue: weatherData.current.temp,
-              ),
+              child: 
+                  AnimatedCurrentWeather(
+                    toValue: weatherData.current.temp,
+                  ),
             ),
             Expanded(
               flex: 1,
-              child: Placeholder(),
+              child: WeeklyWeatherRow(),
             )
           ],
         ),
