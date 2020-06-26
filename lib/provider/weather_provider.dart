@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:weather/data/weather_data.dart';
 
 class WeatherProvider with ChangeNotifier {
-  WeatherData _item = WeatherData(
+  final WeatherData _item = WeatherData(
     lat: 33.44,
     lon: -94.04,
     timezone: "America/Chicago",
