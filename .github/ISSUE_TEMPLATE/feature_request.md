@@ -1,9 +1,9 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+title: "[FEATURE REQUEST]"
+labels: documentation, enhancement, help wanted, good first issue, invalid
+assignees: thisis-dc4
 
 ---
 
