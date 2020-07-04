@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:weather/custom_icons.dart';
+
 import 'package:weather/provider/weather_provider.dart';
 
 class WeeklyWeatherRow extends StatelessWidget {
@@ -13,6 +15,8 @@ class WeeklyWeatherRow extends StatelessWidget {
       itemCount: weatherData.length,
       itemBuilder: (BuildContext context, int index) {
         String day = '';
+        final iconName = 'i${weatherData[index].weather[0].id}';
+        final icon = CustomIcons().iconMapping[iconName];
         if (index == 0) {
           day = 'Feels Like';
         } else if (index == 1) {
@@ -42,12 +46,25 @@ class WeeklyWeatherRow extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                      width: iconSize,
-                      height: iconSize,
-                      child: index == 0
-                          ? Text(weatherData[index].feelsLike.day.toStringAsPrecision(3))
-                          : Text(weatherData[index].temp.day.toStringAsPrecision(3))),
-                  const SizedBox(height: 10),
+                    width: iconSize,
+                    height: iconSize,
+                    child: Icon(
+                      icon,
+                      size: iconSize,
+                    ),
+                  ),
+                  SizedBox(
+                    width: iconSize,
+                    height: iconSize - 10,
+                    child: index == 0
+                        ? Text(weatherData[index]
+                            .feelsLike
+                            .day
+                            .toStringAsPrecision(3))
+                        : Text(
+                            weatherData[index].temp.day.toStringAsPrecision(3)),
+                  ),
+                  const SizedBox(height: 5),
                   Opacity(
                     opacity: 0.75,
                     child: Text(
