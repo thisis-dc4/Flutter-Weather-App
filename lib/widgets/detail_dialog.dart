@@ -4,19 +4,22 @@ import 'package:intl/intl.dart';
 import 'package:weather/data/weather_data.dart';
 
 Future<void> detailDailog(
-    BuildContext context, Daily weatherData, int index) async {
+  BuildContext context,
+  Daily weatherData,
+  int index,
+) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
       String day = '';
       if (index == 0) {
-        day = 'Feels Like';
+        day = 'Today';
       } else if (index == 1) {
         day = 'Tommorow';
       } else {
         final temp = DateTime.fromMillisecondsSinceEpoch(weatherData.dt * 1000);
-        day = DateFormat('dd-MM-yy').format(temp);
+        day = DateFormat.MMMEd().format(temp);
       }
       return Dialog(
         child: Column(

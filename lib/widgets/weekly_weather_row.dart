@@ -10,27 +10,27 @@ class WeeklyWeatherRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const iconSize = 30.0;
-    final weatherData = Provider.of<WeatherProvider>(context).items[0].daily;
+    final weatherData = Provider.of<WeatherProvider>(context).items[0];
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: weatherData.length,
+      itemCount: weatherData.daily.length,
       itemBuilder: (BuildContext context, int index) {
         String day = '';
-        final iconName = 'i${weatherData[index].weather[0].id}';
+        final iconName = 'i${weatherData.daily[index].weather[0].id}';
         final icon = CustomIcons().iconMapping[iconName];
         if (index == 0) {
           day = 'Feels Like';
         } else if (index == 1) {
           day = 'Tommorow';
         } else {
-          final temp =
-              DateTime.fromMillisecondsSinceEpoch(weatherData[index].dt * 1000);
-          day = DateFormat('dd-MM-yy').format(temp);
+          final temp = DateTime.fromMillisecondsSinceEpoch(
+              weatherData.daily[index].dt * 1000);
+          day = DateFormat.MMMEd().format(temp);
         }
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: InkWell(
-            onTap: () => detailDailog(context, weatherData[index], index),
+            onTap: () => detailDailog(context, weatherData.daily[index], index),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -61,13 +61,9 @@ class WeeklyWeatherRow extends StatelessWidget {
                       width: iconSize,
                       height: iconSize - 12,
                       child: index == 0
-                          ? Text(weatherData[index]
-                              .feelsLike
-                              .day
+                          ? Text(weatherData.daily[index].feelsLike.day
                               .toStringAsPrecision(3))
-                          : Text(weatherData[index]
-                              .temp
-                              .day
+                          : Text(weatherData.daily[index].temp.day
                               .toStringAsPrecision(3)),
                     ),
                     const SizedBox(height: 5),
