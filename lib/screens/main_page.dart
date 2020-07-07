@@ -13,7 +13,7 @@ class MainPage extends StatelessWidget {
         Expanded(
           flex: 5,
           child: AnimatedCurrentWeather(
-            toValue: weatherData.current.temp,
+            toValue: weatherData[0].current.temp,
           ),
         ),
         Expanded(

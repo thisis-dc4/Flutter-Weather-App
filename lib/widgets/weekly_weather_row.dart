@@ -4,12 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:weather/custom_icons.dart';
 
 import 'package:weather/provider/weather_provider.dart';
+import 'package:weather/widgets/detail_dialog.dart';
 
 class WeeklyWeatherRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const iconSize = 30.0;
-    final weatherData = Provider.of<WeatherProvider>(context).items.daily;
+    final weatherData = Provider.of<WeatherProvider>(context).items[0].daily;
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: weatherData.length,
@@ -28,52 +29,58 @@ class WeeklyWeatherRow extends StatelessWidget {
         }
         return Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withAlpha(60),
-                  blurRadius: 5.0,
-                  spreadRadius: 1.0,
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: iconSize,
-                    height: iconSize,
-                    child: Icon(
-                      icon,
-                      size: iconSize,
-                    ),
-                  ),
-                  SizedBox(
-                    width: iconSize,
-                    height: iconSize - 10,
-                    child: index == 0
-                        ? Text(weatherData[index]
-                            .feelsLike
-                            .day
-                            .toStringAsPrecision(3))
-                        : Text(
-                            weatherData[index].temp.day.toStringAsPrecision(3)),
-                  ),
-                  const SizedBox(height: 5),
-                  Opacity(
-                    opacity: 0.75,
-                    child: Text(
-                      day,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+          child: InkWell(
+            onTap: () => detailDailog(context, weatherData[index], index),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withAlpha(60),
+                    blurRadius: 5.0,
+                    spreadRadius: 1.0,
                   ),
                 ],
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: iconSize,
+                      height: iconSize,
+                      child: Icon(
+                        icon,
+                        size: iconSize,
+                      ),
+                    ),
+                    SizedBox(
+                      width: iconSize,
+                      height: iconSize - 12,
+                      child: index == 0
+                          ? Text(weatherData[index]
+                              .feelsLike
+                              .day
+                              .toStringAsPrecision(3))
+                          : Text(weatherData[index]
+                              .temp
+                              .day
+                              .toStringAsPrecision(3)),
+                    ),
+                    const SizedBox(height: 5),
+                    Opacity(
+                      opacity: 0.75,
+                      child: Text(
+                        day,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
