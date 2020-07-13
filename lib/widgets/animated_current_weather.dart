@@ -61,6 +61,7 @@ class _AnimatedCurrentWeatherState extends State<AnimatedCurrentWeather>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
+          // ignore: unnecessary_string_interpolations
           '$_number',
           style: textTheme.headline1.copyWith(fontWeight: FontWeight.bold),
         ),

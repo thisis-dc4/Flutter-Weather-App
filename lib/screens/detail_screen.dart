@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:weather/custom_icons.dart';
 import 'package:weather/provider/weather_provider.dart';
+import 'package:weather/widgets/chart.dart';
 import 'package:weather/widgets/rounded_info_box.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -27,7 +29,7 @@ class DetailScreen extends StatelessWidget {
               roundedInfoBox(
                   context,
                   'Dew Point',
-                  '${weatherData.current.dewPoint}\u2103',
+                  '${weatherData.current.dewPoint}\u00B0',
                   CustomIcons.wi_thermometer_exterior),
             ],
           ),
@@ -42,6 +44,7 @@ class DetailScreen extends StatelessWidget {
                   '${weatherData.current.visibility} m', CustomIcons.wi_fog),
             ],
           ),
+          sample3(weatherData: weatherData),
         ],
       ),
     );

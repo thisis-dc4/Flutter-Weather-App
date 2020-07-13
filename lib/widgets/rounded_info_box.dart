@@ -33,11 +33,7 @@ Widget roundedInfoBox(
                 child: Text(text),
               ),
             ),
-            Text(
-              number,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+            Text(number),
           ],
         ),
       ),
