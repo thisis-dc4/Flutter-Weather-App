@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
       create: (context) => WeatherProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(),
+        darkTheme: ThemeData.dark(),
         home: HomePage(),
       ),
     );

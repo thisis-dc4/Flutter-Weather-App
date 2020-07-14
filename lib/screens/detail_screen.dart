@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:weather/custom_icons.dart';
 import 'package:weather/provider/weather_provider.dart';
-import 'package:weather/widgets/chart.dart';
+import 'package:weather/widgets/line_chart.dart';
 import 'package:weather/widgets/rounded_info_box.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -16,6 +16,7 @@ class DetailScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const Text('DETAILS:'),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -33,6 +34,7 @@ class DetailScreen extends StatelessWidget {
                   CustomIcons.wi_thermometer_exterior),
             ],
           ),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -44,7 +46,8 @@ class DetailScreen extends StatelessWidget {
                   '${weatherData.current.visibility} m', CustomIcons.wi_fog),
             ],
           ),
-          sample3(weatherData: weatherData),
+          const SizedBox(height: 10),
+          LineChart(weatherData: weatherData),
         ],
       ),
     );

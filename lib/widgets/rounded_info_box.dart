@@ -1,39 +1,34 @@
 import 'package:flutter/material.dart';
 
 Widget roundedInfoBox(
-    BuildContext context, String text, String number, IconData icon) {
-  final width = MediaQuery.of(context).size.width * 0.3;
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 10.0),
-    child: Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withAlpha(60),
-            blurRadius: 5.0,
-            spreadRadius: 1.0,
-          ),
-        ],
-      ),
+  BuildContext context,
+  String text,
+  String number,
+  IconData icon,
+) {
+  final width = MediaQuery.of(context).size.width * 0.29;
+  return Container(
+    decoration: BoxDecoration(
+      color: Theme.of(context).buttonColor,
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+    ),
+    width: width,
+    child: AspectRatio(
+      aspectRatio: 1.1,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SizedBox(
-              // width: width,
-              child: Icon(icon),
-            ),
+            Icon(icon, size: 35),
             Opacity(
               opacity: 0.75,
-              child: SizedBox(
-                // width: width,
-                child: Text(text),
-              ),
+              child: Text(text),
             ),
-            Text(number),
+            Text(
+              number,
+              style: const TextStyle(fontSize: 18),
+            ),
           ],
         ),
       ),

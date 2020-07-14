@@ -33,7 +33,7 @@ class WeeklyWeatherRow extends StatelessWidget {
             onTap: () => detailDailog(context, weatherData.daily[index], index),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).buttonColor,
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 boxShadow: [
                   BoxShadow(
