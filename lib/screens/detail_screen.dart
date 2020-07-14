@@ -7,9 +7,12 @@ import 'package:weather/widgets/line_chart.dart';
 import 'package:weather/widgets/rounded_info_box.dart';
 
 class DetailScreen extends StatelessWidget {
+  final int index;
+
+  const DetailScreen({Key key, this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final weatherData = Provider.of<WeatherProvider>(context).items[0];
+    final weatherData = Provider.of<WeatherProvider>(context).items[index];
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

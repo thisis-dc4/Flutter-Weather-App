@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:weather/custom_icons.dart';
+import 'package:weather/data/weather_data.dart';
 
-import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/widgets/detail_dialog.dart';
 
 class WeeklyWeatherRow extends StatelessWidget {
+  final WeatherData weatherData;
+
+  const WeeklyWeatherRow({Key key, this.weatherData}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     const iconSize = 30.0;
-    final weatherData = Provider.of<WeatherProvider>(context).items[0];
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: weatherData.daily.length,

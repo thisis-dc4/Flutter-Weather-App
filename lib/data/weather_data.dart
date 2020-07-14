@@ -34,8 +34,8 @@ class WeatherData {
         timezone: json["timezone"],
         timezoneOffset: json["timezone_offset"],
         current: Current.fromJson(json["current"]),
-        minutely: List<Minutely>.from(
-            json["minutely"].map((x) => Minutely.fromJson(x))),
+        // minutely: List<Minutely>.from(
+        //     json["minutely"].map((x) => Minutely.fromJson(x))),
         hourly:
             List<Hourly>.from(json["hourly"].map((x) => Hourly.fromJson(x))),
         daily: List<Daily>.from(json["daily"].map((x) => Daily.fromJson(x))),
@@ -93,7 +93,7 @@ class Current {
         windDeg: json["wind_deg"],
         weather:
             List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
-        rain: Rain.fromJson(json["rain"]),
+        rain: json["rain"] == null ? null : Rain.fromJson(json["rain"]),
       );
 }
 
@@ -177,7 +177,7 @@ class Daily {
         weather:
             List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
         clouds: json["clouds"],
-        rain: json["rain"].toDouble(),
+        rain: json["rain"] == null ? null : json["rain"].toDouble(),
         uvi: json["uvi"].toDouble(),
       );
 }
@@ -269,7 +269,7 @@ class Hourly {
         windDeg: json["wind_deg"],
         weather:
             List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
-        rain: Rain.fromJson(json["rain"]),
+        rain: json["rain"] == null ? null : Rain.fromJson(json["rain"]),
       );
 }
 

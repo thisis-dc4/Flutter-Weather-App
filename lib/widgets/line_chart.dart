@@ -8,22 +8,24 @@ class LineChart extends StatelessWidget {
   final WeatherData weatherData;
 
   List<DataPoint> get groupedHourlyValues {
-    return List.generate(weatherData.daily.length, (index) {
+    return List.generate(weatherData.hourly.length, (index) {
       return DataPoint<DateTime>(
-        value: weatherData.daily[index].temp.day,
+        value: weatherData.hourly[index].temp,
         xAxis: DateTime.fromMillisecondsSinceEpoch(
-            weatherData.daily[index].dt * 1000),
+            weatherData.hourly[index].dt * 1000),
       );
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final int length = weatherData.hourly.length - 1;
+    final currentTime = DateTime.now();
     final fromDate = DateTime.fromMillisecondsSinceEpoch(
-      weatherData.daily[1].dt * 1000,
+      weatherData.hourly[0].dt * 1000,
     );
     final toDate = DateTime.fromMillisecondsSinceEpoch(
-      weatherData.daily[7].dt * 1000,
+      weatherData.hourly[length].dt * 1000,
     );
 
     return Center(
@@ -33,12 +35,9 @@ class LineChart extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: BezierChart(
           fromDate: fromDate,
-          bezierChartScale: BezierChartScale
-              .WEEKLY, // TODO: Change it HOURLY when you get the data or after api integration.
+          bezierChartScale: BezierChartScale.HOURLY,
           toDate: toDate,
-          selectedDate: DateTime.fromMillisecondsSinceEpoch(
-            weatherData.daily[6].dt * 1000,
-          ),
+          selectedDate: currentTime,
           series: [
             BezierLine(
               label: '\u2103',
