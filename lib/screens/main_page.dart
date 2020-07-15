@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/custom_icons.dart';
 
@@ -23,13 +24,30 @@ class MainPage extends StatelessWidget {
           children: [
             Expanded(
               flex: 5,
-              child: Row(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  AnimatedCurrentWeather(
-                    toValue: weatherData.current.temp,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      AnimatedCurrentWeather(
+                        toValue: weatherData.current.temp,
+                      ),
+                      Icon(icon, size: 70),
+                    ],
                   ),
-                  Icon(icon, size: 70),
+                  Text(
+                    weatherData.current.weather[0].description.toUpperCase(),
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    DateFormat.d()
+                        .addPattern('MMM, EEEEEE')
+                        .format(DateTime.now())
+                        .toUpperCase(),
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ],
               ),
             ),

@@ -6,13 +6,13 @@ A Weather App made with Flutter. Pull requests are always welcome.
 
 **Remember: Add your API key in confidential.dart and name it '*apiKey*'.**
 
-* [X] Design the app using example.json.
-  * [X] Add animated current weather.
-  * [X] Add a bottom row of widgets to show the weather for rest of the week.
-  * [X] Add custom icons.
-  * [X] Add a bottom page to show detailed stats for the rest of the day like hourly weather predictions.
-* [X] Integrate OpenWeather One Call API using Provider.
-* [X] Fetch User Location
+* [X] ~~Design the app using example.json.~~
+  * [X] ~~Add animated current weather.~~
+  * [X] ~~Add a bottom row of widgets to show the weather for rest of the week.~~
+  * [X] ~~Add custom icons~~.
+  * [X] ~~Add a bottom page to show detailed stats for the rest of the day like hourly weather predictions.~~
+* [X] ~~Integrate OpenWeather One Call API using Provider.~~
+* [X] ~~Fetch User Location~~
 
 ## Features List
 

@@ -20,7 +20,7 @@ class WeeklyWeatherRow extends StatelessWidget {
         final iconName = 'i${weatherData.daily[index].weather[0].id}';
         final icon = CustomIcons().iconMapping[iconName];
         if (index == 0) {
-          day = 'Feels Like';
+          day = 'Today';
         } else if (index == 1) {
           day = 'Tommorow';
         } else {
@@ -28,6 +28,22 @@ class WeeklyWeatherRow extends StatelessWidget {
               weatherData.daily[index].dt * 1000);
           day = DateFormat.MMMEd().format(temp);
         }
+        // return Padding(
+        //   padding: const EdgeInsets.all(10.0),
+        //   child: InkWell(
+        //     onTap: () => detailDailog(context, weatherData.daily[index], index),
+        //     child: SizedBox(
+        //       child: Column(
+        //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //         children: <Widget>[
+        //           Text(day),
+        //           Icon(icon),
+        //           Text(weatherData.daily[index].temp.day.toString()),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // );
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: InkWell(
