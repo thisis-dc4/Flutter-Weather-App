@@ -17,7 +17,9 @@ A Weather App made with Flutter. Pull requests are always welcome.
 ## Features List
 
 * [ ] Convert from celsuis to fahrenheit in the settings page.
-* [ ] Cache the weather data and add pull to refresh.
+* [ ] ~~Cache the weather data~~
+* [ ] Saved User Location(didn't cache weather data because the data should update everytime the app is opened).
+* [ ] Add pull to refresh.
 * [ ] The ability to search for a location rather than using Location data.
 * [ ] Add multiple locations and set a favourite/default location.
 * [ ] On tap the bottom row of widgets show detailed stats for the particular day.

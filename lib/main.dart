@@ -12,6 +12,7 @@ void main() async {
   final path = await getApplicationDocumentsDirectory();
   Hive.init(path.path);
   Hive.registerAdapter(LocationDataAdapter());
+  await Hive.openBox('locationData');
   runApp(MyApp());
 }
 
