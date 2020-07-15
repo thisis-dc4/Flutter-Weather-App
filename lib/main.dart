@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:weather/data/location_data.dart';
 
 import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/screens/home_page.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final path = await getApplicationDocumentsDirectory();
+  Hive.init(path.path);
+  Hive.registerAdapter(LocationDataAdapter());
+  runApp(MyApp());
+}
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -16,7 +30,29 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(),
         darkTheme: ThemeData.dark(),
         home: HomePage(),
+        // FutureBuilder(
+        //   future: Hive.openBox('locationData'),
+        //   builder: (context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.done) {
+        //       if (snapshot.hasError) {
+        //         return Text(snapshot.error.toString());
+        //       } else {
+        //         return HomePage();
+        //       }
+        //     }
+        //     return const Center(
+        //       child: CircularProgressIndicator(),
+        //     );
+        //   },
+        // ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    Hive.box('locationData').compact();
+    Hive.close();
+    super.dispose();
   }
 }

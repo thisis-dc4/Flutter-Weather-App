@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'package:weather/data/weather_data.dart';
 
-Future<void> detailDailog(
+Future<void> detailDialog(
   BuildContext context,
   Daily weatherData,
   int index,

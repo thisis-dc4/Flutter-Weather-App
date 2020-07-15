@@ -47,7 +47,7 @@ class WeeklyWeatherRow extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: InkWell(
-            onTap: () => detailDailog(context, weatherData.daily[index], index),
+            onTap: () => detailDialog(context, weatherData.daily[index], index),
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).buttonColor,
