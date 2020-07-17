@@ -10,7 +10,6 @@ import 'package:weather/data/confidential.dart';
 
 class WeatherProvider with ChangeNotifier {
   final List<WeatherData> _items = [];
-
   List<WeatherData> get items {
     return _items;
   }
@@ -22,7 +21,7 @@ class WeatherProvider with ChangeNotifier {
     bool boolVal;
     final prefs = await SharedPreferences.getInstance().then((value) {
       boolVal = value.containsKey('firstRun');
-      print('boolVal: $boolVal');
+      // print('boolVal: $boolVal');
       notifyListeners();
       return value;
     });
@@ -58,17 +57,21 @@ class WeatherProvider with ChangeNotifier {
     for (var i = 0; i < locationDataBox.length; i++) {
       locationData = locationDataBox.get(i) as ld.LocationData;
       // print('${locationData.latitude}\n${locationData.longitude}');
-      final String url =
-          'https://api.openweathermap.org/data/2.5/onecall?lat=${locationData.latitude}&lon=${locationData.longitude}&appid=$apiKey&units=metric';
+      await getData2(locationData);
+    }
+  }
 
-      try {
-        final response = await get(url);
-        final data = weatherDataFromJson(response.body);
-        _items.add(data);
-        notifyListeners();
-      } catch (e) {
-        // print(e);
-      }
+  Future<void> getData2(ld.LocationData locationData) async {
+    final String url =
+        'https://api.openweathermap.org/data/2.5/onecall?lat=${locationData.latitude}&lon=${locationData.longitude}&appid=$apiKey&units=metric';
+
+    try {
+      final response = await get(url);
+      final data = weatherDataFromJson(response.body);
+      _items.add(data);
+      notifyListeners();
+    } catch (e) {
+      // print(e);
     }
   }
 }

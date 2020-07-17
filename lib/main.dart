@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/data/location_data.dart';
+import 'package:weather/provider/search_provider.dart';
 
 import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/screens/home_page.dart';
@@ -24,8 +25,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => WeatherProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<WeatherProvider>(
+          create: (context) => WeatherProvider(),
+        ),
+        ChangeNotifierProxyProvider<WeatherProvider, SearchProvider>(
+          create: (context) => SearchProvider(),
+          update: (context, value, previous) =>
+              SearchProvider(weatherProvider: value),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(),
