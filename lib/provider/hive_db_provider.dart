@@ -49,7 +49,7 @@ class HiveDbProvider extends ChangeNotifier {
       final data = weatherModelFromJson(response.body);
       _items.add(data);
       notifyListeners();
-    } on HttpException catch (e) {
+    } on HttpException catch (_) {
       throw HttpException("Couldn't fetch weather data.");
     } catch (e) {
       throw Exception();

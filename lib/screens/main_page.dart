@@ -9,7 +9,7 @@ import 'package:weather/models/weather_model.dart';
 import 'package:weather/provider/hive_db_provider.dart';
 import 'package:weather/screens/detail_screen.dart';
 import 'package:weather/widgets/animated_current_weather.dart';
-import 'package:weather/widgets/weekly_weather_row.dart';
+import 'package:weather/widgets/bottom_row.dart';
 
 class MainPage extends StatelessWidget {
   final int index;
@@ -62,7 +62,7 @@ class MainPage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: WeeklyWeatherRow(weatherData: weatherData),
+              child: BottomRow(weatherData: weatherData),
             )
           ],
         ),
