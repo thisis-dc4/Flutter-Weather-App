@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:weather/custom_icons.dart';
-import 'package:weather/provider/weather_provider.dart';
+import 'package:weather/provider/hive_db_provider.dart';
 import 'package:weather/widgets/line_chart.dart';
 import 'package:weather/widgets/rounded_info_box.dart';
 
@@ -12,7 +12,7 @@ class DetailScreen extends StatelessWidget {
   const DetailScreen({Key key, this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final weatherData = Provider.of<WeatherProvider>(context).items[index];
+    final weatherData = Provider.of<HiveDbProvider>(context).items[index];
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/models/location_model.dart';
+import 'package:weather/provider/hive_db_provider.dart';
 import 'package:weather/provider/search_provider.dart';
 
 import 'package:weather/provider/weather_provider.dart';
@@ -27,13 +28,18 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<WeatherProvider>(
-          create: (context) => WeatherProvider(),
+        ChangeNotifierProvider<HiveDbProvider>(
+          create: (context) => HiveDbProvider(),
         ),
-        ChangeNotifierProxyProvider<WeatherProvider, SearchProvider>(
+        ChangeNotifierProxyProvider<HiveDbProvider, WeatherProvider>(
+          create: (context) => WeatherProvider(),
+          update: (context, value, previous) =>
+              WeatherProvider(hiveDbProvider: value),
+        ),
+        ChangeNotifierProxyProvider<HiveDbProvider, SearchProvider>(
           create: (context) => SearchProvider(),
           update: (context, value, previous) =>
-              SearchProvider(weatherProvider: value),
+              SearchProvider(hiveDbProvider: value),
         ),
       ],
       child: MaterialApp(

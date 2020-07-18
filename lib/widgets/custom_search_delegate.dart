@@ -112,23 +112,36 @@ class CustomSearchDelegate extends SearchDelegate {
               } else {
                 resultList = snapshot.data
                     .where((e) =>
-                        e['name'].toString().toLowerCase().contains(query))
+                        e['name'].toString().toLowerCase().startsWith(query))
                     .toList();
                 // dynamic results = snapshot.data.toList();
                 return ListView.builder(
                   itemCount: resultList.length,
                   itemBuilder: (context, index) => ListTile(
-                      title: Text(resultList[index]['name']),
-                      onTap: () {
-                        final location = LocationModel(
-                          latitude: resultList[index]['coord.lat'],
-                          longitude: resultList[index]['coord.lon'],
-                          name: resultList[index]['name'],
-                        );
-                        // print(location.latitude);
-                        searchProvider.addLocation(location);
-                        close(context, null);
-                      }),
+                    title: Text(resultList[index]['name']),
+                    onTap: () async {
+                      final location = LocationModel(
+                        latitude: resultList[index]['coord.lat'],
+                        longitude: resultList[index]['coord.lon'],
+                        name: resultList[index]['name'],
+                      );
+                      // print(location.latitude);
+                      FutureBuilder(
+                        future: searchProvider.addLocation(location),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      );
+                      close(context, null);
+                    },
+                  ),
                 );
               }
             },

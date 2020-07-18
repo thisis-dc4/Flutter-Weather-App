@@ -1,54 +1,23 @@
 import 'dart:convert';
 
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:hive/hive.dart';
 import 'package:weather/models/location_model.dart';
-import 'package:weather/provider/weather_provider.dart';
+import 'package:weather/provider/hive_db_provider.dart';
 
 class SearchProvider with ChangeNotifier {
-  final AsyncMemoizer _memoizer = AsyncMemoizer();
   final locationDataBox = Hive.box('locationData');
-  WeatherProvider weatherProvider;
+  HiveDbProvider hiveDbProvider;
 
-  SearchProvider({this.weatherProvider});
-
-  Future<String> _loadFromAsset() async {
-    // print('Here');
-    final file = await rootBundle.loadString("assets/city_data/cities.json");
-    // print(file);
-    return file;
-  }
-
-  Future<dynamic> parseJson() async {
-    return _memoizer.runOnce(
-      () async {
-        final String jsonString = await _loadFromAsset();
-        // jsonFile = ;
-        // print(jsonFile[0]['name']);
-        return json.decode(jsonString);
-      },
-    );
-    // notifyListeners();
-  }
+  SearchProvider({this.hiveDbProvider});
 
   Future<dynamic> streamParseJson(String query) async {
-    final String jsonString = await _loadFromAsset();
-    // jsonFile = json.decode(jsonString);
-    // final results = jsonFile
-    //     .where((e) => e['name'].toString().toLowerCase().contains(query));
-    // print(results.map((e) => e['name']).toList());
-    // results.forEach((element) {});
+    final String jsonString = await hiveDbProvider.loadFromAsset();
     return json.decode(jsonString);
   }
 
-  void addLocation(LocationModel location) {
-    final length = locationDataBox.length;
+  Future<void> addLocation(LocationModel location) async {
     locationDataBox.add(location);
-    print('Length: $length');
-    print(location.latitude);
-    // locationDataBox.getAt(length);
-    weatherProvider.getData2(location);
+    await hiveDbProvider.getForecast(location);
   }
 }
