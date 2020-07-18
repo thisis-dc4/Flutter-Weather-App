@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather/custom_icons.dart';
-import 'package:weather/data/weather_data.dart';
+import 'package:weather/models/weather_model.dart';
 
 import 'package:weather/widgets/detail_dialog.dart';
 
 class WeeklyWeatherRow extends StatelessWidget {
-  final WeatherData weatherData;
+  final WeatherModel weatherData;
 
   const WeeklyWeatherRow({Key key, this.weatherData}) : super(key: key);
   @override

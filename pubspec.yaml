@@ -30,7 +30,7 @@ dependencies:
   flutter_hooks: ^0.12.0
   location: ^3.0.2
   shared_preferences: ^0.5.8
-  hive: 1.4.1+1
+  hive: 1.2.0
   hive_flutter: ^0.3.0+2
   path_provider: ^1.6.11
   cupertino_icons: ^0.1.3

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:weather/data/weather_data.dart';
+import 'package:weather/models/weather_model.dart';
 
 Future<void> detailDialog(
   BuildContext context,

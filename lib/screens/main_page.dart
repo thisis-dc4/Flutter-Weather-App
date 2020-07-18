@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/custom_icons.dart';
-import 'package:weather/data/location_data.dart';
+import 'package:weather/models/location_model.dart';
 
 import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/screens/detail_screen.dart';
@@ -16,7 +16,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locationDataBox = Hive.box('locationData');
-    final LocationData savedData = locationDataBox.getAt(index);
+    final LocationModel savedData = locationDataBox.getAt(index);
     final weatherData = Provider.of<WeatherProvider>(context).items[index];
     final iconName = 'i${weatherData.current.weather[0].id}';
     final icon = CustomIcons().iconMapping[iconName];

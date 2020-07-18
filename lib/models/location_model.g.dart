@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'location_data.dart';
+part of 'location_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class LocationDataAdapter extends TypeAdapter<LocationData> {
+class LocationModelAdapter extends TypeAdapter<LocationModel> {
   @override
-  LocationData read(BinaryReader reader) {
+  LocationModel read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return LocationData(
-      fields[0] as double,
-      fields[1] as double,
-      fields[2] as String,
+    return LocationModel(
+      latitude: fields[0] as double,
+      longitude: fields[1] as double,
+      name: fields[2] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, LocationData obj) {
+  void write(BinaryWriter writer, LocationModel obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)
@@ -31,7 +31,4 @@ class LocationDataAdapter extends TypeAdapter<LocationData> {
       ..writeByte(2)
       ..write(obj.name);
   }
-
-  @override
-  int get typeId => 0;
 }
