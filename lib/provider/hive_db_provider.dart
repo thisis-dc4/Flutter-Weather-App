@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -7,6 +9,7 @@ import 'package:http/http.dart';
 import 'package:weather/confidential.dart';
 import 'package:weather/models/location_model.dart';
 import 'package:weather/models/weather_model.dart';
+import 'package:weather/exceptions/http_exception.dart';
 
 class HiveDbProvider extends ChangeNotifier {
   final List<WeatherModel> _items = [];
@@ -39,14 +42,19 @@ class HiveDbProvider extends ChangeNotifier {
 
     try {
       final response = await get(url);
+      final responseBody = json.decode(response.body);
+      if (responseBody['cod'] != null) {
+        throw HttpException("Couldn't fetch weather data.");
+      }
       final data = weatherModelFromJson(response.body);
       _items.add(data);
       notifyListeners();
+    } on HttpException catch (e) {
+      throw HttpException("Couldn't fetch weather data.");
     } catch (e) {
-      print(e);
+      throw Exception();
     }
   }
-
   // Future<String> locName(double latitude, double longitude) async {
   //   final String jsonString = await loadFromAsset();
   //   final jsonFile = json.decode(jsonString);

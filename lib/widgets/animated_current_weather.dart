@@ -3,16 +3,12 @@ import 'package:flutter/material.dart';
 class AnimatedCurrentWeather extends StatefulWidget {
   const AnimatedCurrentWeather({
     Key key,
-    this.fromValue = 1,
     @required this.toValue,
-    this.duration = const Duration(milliseconds: 1500),
-  })  : assert(fromValue != null),
-        assert(toValue != null),
-        assert(fromValue <= toValue),
+    this.duration = const Duration(milliseconds: 500),
+  })  : assert(toValue != null),
         assert(duration != null),
         super(key: key);
 
-  final double fromValue;
   final double toValue;
   final Duration duration;
 
@@ -22,37 +18,41 @@ class AnimatedCurrentWeather extends StatefulWidget {
 
 class _AnimatedCurrentWeatherState extends State<AnimatedCurrentWeather>
     with SingleTickerProviderStateMixin {
-  Animation<double> _animation;
-  AnimationController _controller;
+  // Animation<double> _animation;
+  // AnimationController _controller;
 
-  String _number;
+  // String _number;
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
+  // _controller = AnimationController(
+  //   duration: widget.duration,
+  //   vsync: this,
+  // );
 
-    _animation = Tween<double>(begin: widget.fromValue, end: widget.toValue)
-        .animate(_controller)
-          ..addListener(() {
-            setState(() {
-              _number = _animation.value.toStringAsFixed(0);
-            });
-          });
+  // _animation = Tween<double>(
+  //         begin: widget.toValue >= 10
+  //             ? widget.toValue - 10
+  //             : widget.toValue + 10,
+  //         end: widget.toValue)
+  //     .animate(_controller)
+  //       ..addListener(() {
+  //         setState(() {
+  //           _number = _animation.value.toStringAsFixed(0);
+  //         });
+  //       });
 
-    _controller.forward();
-  }
+  // _controller.forward();
+  // }
 
-  @override
-  Future<void> dispose() async {
-    _controller.dispose();
+  // @override
+  // Future<void> dispose() async {
+  //   _controller.dispose();
 
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class _AnimatedCurrentWeatherState extends State<AnimatedCurrentWeather>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          _number ?? '0',
+          widget.toValue.toStringAsFixed(1) ?? '0',
           style: textTheme.headline1.copyWith(fontWeight: FontWeight.bold),
         ),
       ],

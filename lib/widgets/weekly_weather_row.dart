@@ -75,15 +75,18 @@ class WeeklyWeatherRow extends StatelessWidget {
                         size: iconSize,
                       ),
                     ),
-                    SizedBox(
-                      width: iconSize,
-                      height: iconSize - 12,
-                      child: index == 0
-                          ? Text(weatherData.daily[index].feelsLike.day
-                              .toStringAsPrecision(3))
-                          : Text(weatherData.daily[index].temp.day
-                              .toStringAsPrecision(3)),
-                    ),
+                    // SizedBox(
+                    //   width: iconSize,
+                    //   height: iconSize - 12,
+                    //   child:
+                    if (index == 0)
+                      Text(weatherData.daily[index].feelsLike.day
+                          .toStringAsFixed(1))
+                    else
+                      Text(
+                        weatherData.daily[index].temp.day.toStringAsFixed(1),
+                        // ),
+                      ),
                     const SizedBox(height: 5),
                     Opacity(
                       opacity: 0.75,

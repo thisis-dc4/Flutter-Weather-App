@@ -14,6 +14,7 @@ class HomePage extends HookWidget {
     final wProvider = Provider.of<WeatherProvider>(context);
     final hProvider = Provider.of<HiveDbProvider>(context);
     final future = useMemoized(() => wProvider.fetchWeatherData());
+
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
@@ -27,17 +28,27 @@ class HomePage extends HookWidget {
       extendBodyBehindAppBar: true,
       body: FutureBuilder(
         future: future,
-        builder: (context, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? const Center(child: CircularProgressIndicator())
-                : Scaffold(
-                    body: SafeArea(
-                      child: PageView.builder(
-                        itemCount: hProvider.items.length,
-                        itemBuilder: (context, index) => MainPage(index: index),
-                      ),
-                    ),
-                  ),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                "ERROR: ${snapshot.error}",
+              ),
+            );
+            // _showErrorDialog(snapshot.error.toString());
+          }
+          return Scaffold(
+            body: SafeArea(
+              child: PageView.builder(
+                itemCount: hProvider.items.length,
+                itemBuilder: (context, index) => MainPage(index: index),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
