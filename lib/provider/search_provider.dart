@@ -4,7 +4,7 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:hive/hive.dart';
-import 'package:weather/data/location_data.dart';
+import 'package:weather/models/location_model.dart';
 import 'package:weather/provider/weather_provider.dart';
 
 class SearchProvider with ChangeNotifier {
@@ -43,7 +43,7 @@ class SearchProvider with ChangeNotifier {
     return json.decode(jsonString);
   }
 
-  void addLocation(LocationData location) {
+  void addLocation(LocationModel location) {
     final length = locationDataBox.length;
     locationDataBox.add(location);
     print('Length: $length');

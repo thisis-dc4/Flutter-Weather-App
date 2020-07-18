@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:bezier_chart/bezier_chart.dart';
 
-import 'package:weather/data/weather_data.dart';
+import 'package:weather/models/weather_model.dart';
 
 class LineChart extends StatelessWidget {
   const LineChart({Key key, this.weatherData}) : super(key: key);
-  final WeatherData weatherData;
+  final WeatherModel weatherData;
 
   List<DataPoint> get groupedHourlyValues {
     return List.generate(weatherData.hourly.length, (index) {

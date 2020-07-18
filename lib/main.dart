@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:weather/data/location_data.dart';
+import 'package:weather/models/location_model.dart';
 import 'package:weather/provider/search_provider.dart';
 
 import 'package:weather/provider/weather_provider.dart';
@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final path = await getApplicationDocumentsDirectory();
   Hive.init(path.path);
-  Hive.registerAdapter(LocationDataAdapter());
+  Hive.registerAdapter(LocationModelAdapter(), 0);
   await Hive.openBox('locationData');
   runApp(MyApp());
 }

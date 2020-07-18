@@ -3,21 +3,22 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather/data/location_data.dart' as ld;
+import 'package:weather/models/location_model.dart';
 
-import 'package:weather/data/weather_data.dart';
-import 'package:weather/data/confidential.dart';
+import 'package:weather/models/weather_model.dart';
+import 'package:weather/confidential.dart';
 
 class WeatherProvider with ChangeNotifier {
-  final List<WeatherData> _items = [];
-  List<WeatherData> get items {
+  final List<WeatherModel> _items = [];
+
+  List<WeatherModel> get items {
     return _items;
   }
 
   Future<void> fetchWeatherData() async {
     // await Hive.openBox('locationData');
     final locationDataBox = Hive.box('locationData');
-    ld.LocationData locationData;
+    LocationModel locationData;
     bool boolVal;
     final prefs = await SharedPreferences.getInstance().then((value) {
       boolVal = value.containsKey('firstRun');
@@ -47,27 +48,30 @@ class WeatherProvider with ChangeNotifier {
       }
 
       _locationData = await location.getLocation();
-      final locData = ld.LocationData(
-          _locationData.latitude, _locationData.longitude, "Don't Know");
+      final locData = LocationModel(
+        latitude: _locationData.latitude,
+        longitude: _locationData.longitude,
+        name: "Don't Know",
+      );
       await locationDataBox.add(locData);
     }
 
     await prefs.setBool('firstRun', true);
 
     for (var i = 0; i < locationDataBox.length; i++) {
-      locationData = locationDataBox.get(i) as ld.LocationData;
+      locationData = locationDataBox.get(i) as LocationModel;
       // print('${locationData.latitude}\n${locationData.longitude}');
       await getData2(locationData);
     }
   }
 
-  Future<void> getData2(ld.LocationData locationData) async {
+  Future<void> getData2(LocationModel locationData) async {
     final String url =
         'https://api.openweathermap.org/data/2.5/onecall?lat=${locationData.latitude}&lon=${locationData.longitude}&appid=$apiKey&units=metric';
 
     try {
       final response = await get(url);
-      final data = weatherDataFromJson(response.body);
+      final data = weatherModelFromJson(response.body);
       _items.add(data);
       notifyListeners();
     } catch (e) {

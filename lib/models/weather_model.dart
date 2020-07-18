@@ -1,14 +1,14 @@
 // To parse this JSON data, do
 //
-//     final weatherData = weatherDataFromJson(jsonString);
+//     final weatherModel = weatherModelFromJson(jsonString);
 
 import 'dart:convert';
 
-WeatherData weatherDataFromJson(String str) =>
-    WeatherData.fromJson(json.decode(str));
+WeatherModel weatherModelFromJson(String str) =>
+    WeatherModel.fromJson(json.decode(str));
 
-class WeatherData {
-  WeatherData({
+class WeatherModel {
+  WeatherModel({
     this.lat,
     this.lon,
     this.timezone,
@@ -28,7 +28,7 @@ class WeatherData {
   List<Hourly> hourly;
   List<Daily> daily;
 
-  factory WeatherData.fromJson(Map<String, dynamic> json) => WeatherData(
+  factory WeatherModel.fromJson(Map<String, dynamic> json) => WeatherModel(
         lat: json["lat"].toDouble(),
         lon: json["lon"].toDouble(),
         timezone: json["timezone"],
