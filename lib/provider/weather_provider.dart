@@ -1,56 +1,63 @@
 import 'package:flutter/foundation.dart';
+
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather/models/location_model.dart';
 
 import 'package:weather/provider/hive_db_provider.dart';
+import 'package:weather/models/location_model.dart';
 
 class WeatherProvider with ChangeNotifier {
   final HiveDbProvider hiveDbProvider;
 
   WeatherProvider({this.hiveDbProvider});
 
-  Future<void> fetchWeatherData() async {
+  Future<void> checkFirstRun() async {
     bool boolVal;
     final prefs = await SharedPreferences.getInstance().then((value) {
       boolVal = value.containsKey('firstRun');
-      // print('boolVal: $boolVal');
       notifyListeners();
       return value;
     });
+
     if (!boolVal) {
-      final Location location = Location();
+      await fetchUserLocation();
+    }
+    await prefs.setBool('firstRun', false);
 
-      bool _serviceEnabled;
-      PermissionStatus _permissionGranted;
-      LocationData _locationData;
+    await fetchWeatherData();
+  }
 
-      _serviceEnabled = await location.serviceEnabled();
+  Future<void> fetchUserLocation() async {
+    final Location location = Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
-        _serviceEnabled = await location.requestService();
-        if (!_serviceEnabled) {
-          return;
-        }
+        return;
       }
-
-      _permissionGranted = await location.hasPermission();
-      if (_permissionGranted == PermissionStatus.denied) {
-        _permissionGranted = await location.requestPermission();
-        if (_permissionGranted != PermissionStatus.granted) {}
-      }
-
-      _locationData = await location.getLocation();
-      final locData = LocationModel(
-        latitude: _locationData.latitude,
-        longitude: _locationData.longitude,
-        name: "Your City",
-      );
-      print(locData.toString());
-      await hiveDbProvider.setNewLocation(locData);
+    }
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {}
     }
 
-    await prefs.setBool('firstRun', true);
+    _locationData = await location.getLocation();
+    final locData = LocationModel(
+      latitude: _locationData.latitude,
+      longitude: _locationData.longitude,
+      name: "Your City",
+    );
 
+    await hiveDbProvider.addNewLocation(locData);
+  }
+
+  Future<void> fetchWeatherData() async {
     for (var i = 0; i < hiveDbProvider.length; i++) {
       final LocationModel locationData = hiveDbProvider.getDataAt(i);
       await hiveDbProvider.getForecast(locationData);

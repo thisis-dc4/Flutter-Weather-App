@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+
 import 'package:weather/models/location_model.dart';
 import 'package:weather/provider/hive_db_provider.dart';
 import 'package:weather/provider/search_provider.dart';
-
 import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/screens/home_page.dart';
 
@@ -47,21 +48,6 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(),
         darkTheme: ThemeData.dark(),
         home: HomePage(),
-        // FutureBuilder(
-        //   future: Hive.openBox('locationData'),
-        //   builder: (context, snapshot) {
-        //     if (snapshot.connectionState == ConnectionState.done) {
-        //       if (snapshot.hasError) {
-        //         return Text(snapshot.error.toString());
-        //       } else {
-        //         return HomePage();
-        //       }
-        //     }
-        //     return const Center(
-        //       child: CircularProgressIndicator(),
-        //     );
-        //   },
-        // ),
       ),
     );
   }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import 'package:weather/custom_icons.dart';
 import 'package:weather/models/location_model.dart';
+import 'package:weather/models/weather_model.dart';
 import 'package:weather/provider/hive_db_provider.dart';
-
 import 'package:weather/screens/detail_screen.dart';
 import 'package:weather/widgets/animated_current_weather.dart';
 import 'package:weather/widgets/weekly_weather_row.dart';
@@ -15,11 +16,12 @@ class MainPage extends StatelessWidget {
   const MainPage({Key key, this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final locationDataBox = Hive.box('locationData');
-    final LocationModel savedData = locationDataBox.getAt(index);
-    final weatherData = Provider.of<HiveDbProvider>(context).items[index];
-    final iconName = 'i${weatherData.current.weather[0].id}';
-    final icon = CustomIcons().iconMapping[iconName];
+    final HiveDbProvider hiveDbProvider = Provider.of<HiveDbProvider>(context);
+    final WeatherModel weatherData = hiveDbProvider.items[index];
+    final LocationModel savedData = hiveDbProvider.getDataAt(index);
+    final String iconName = 'i${weatherData.current.weather[0].id}';
+    final IconData icon = CustomIcons().iconMapping[iconName];
+
     return PageView(
       scrollDirection: Axis.vertical,
       children: [

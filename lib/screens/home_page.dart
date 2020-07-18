@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
+
 import 'package:weather/provider/hive_db_provider.dart';
 import 'package:weather/provider/weather_provider.dart';
 import 'package:weather/screens/main_page.dart';

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+
 import 'package:hive/hive.dart';
 
 part 'location_model.g.dart';

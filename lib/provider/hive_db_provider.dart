@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
 import 'package:flutter/services.dart' show rootBundle;
+
+import 'package:hive/hive.dart';
 import 'package:http/http.dart';
+
 import 'package:weather/confidential.dart';
 import 'package:weather/models/location_model.dart';
 import 'package:weather/models/weather_model.dart';
@@ -22,7 +24,7 @@ class HiveDbProvider extends ChangeNotifier {
     return locationDataBox.getAt(index);
   }
 
-  Future<void> setNewLocation(LocationModel location) async {
+  Future<void> addNewLocation(LocationModel location) async {
     await locationDataBox.add(location);
   }
 

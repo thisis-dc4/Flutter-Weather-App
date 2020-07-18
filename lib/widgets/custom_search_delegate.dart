@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+
 import 'package:weather/models/location_model.dart';
 import 'package:weather/provider/search_provider.dart';
 
@@ -39,13 +41,13 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     final searchProvider = Provider.of<SearchProvider>(context);
-    if (query.length < 3) {
+    if (query.isEmpty) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const <Widget>[
           Center(
             child: Text(
-              "Search term must be longer than two letters.",
+              "Enter a search term.",
             ),
           )
         ],
@@ -62,7 +64,6 @@ class CustomSearchDelegate extends SearchDelegate {
             longitude: resultList[index]['coord.lon'],
             name: resultList[index]['name'],
           );
-          // print(location.latitude);
           searchProvider.addLocation(location);
           close(context, null);
         },
@@ -73,13 +74,13 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final searchProvider = Provider.of<SearchProvider>(context);
-    if (query.length < 3) {
+    if (query.isEmpty) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const <Widget>[
           Center(
             child: Text(
-              "Search term must be longer than two letters.",
+              "Enter a search term.",
             ),
           )
         ],
@@ -88,7 +89,6 @@ class CustomSearchDelegate extends SearchDelegate {
 
     return Column(
       children: <Widget>[
-        //Build the results based on the searchResults stream in the searchBloc
         Expanded(
           child: StreamBuilder(
             stream: searchProvider.streamParseJson(query).asStream(),
@@ -114,18 +114,34 @@ class CustomSearchDelegate extends SearchDelegate {
                     .where((e) =>
                         e['name'].toString().toLowerCase().startsWith(query))
                     .toList();
-                // dynamic results = snapshot.data.toList();
                 return ListView.builder(
                   itemCount: resultList.length,
                   itemBuilder: (context, index) => ListTile(
-                    title: Text(resultList[index]['name']),
+                    title: RichText(
+                      text: TextSpan(
+                          text: resultList[index]['name']
+                              .substring(0, query.length),
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: resultList[index]['name']
+                                  .substring(query.length),
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ]),
+                    ),
+                    // Text(),
                     onTap: () async {
                       final location = LocationModel(
                         latitude: resultList[index]['coord.lat'],
                         longitude: resultList[index]['coord.lon'],
                         name: resultList[index]['name'],
                       );
-                      // print(location.latitude);
                       FutureBuilder(
                         future: searchProvider.addLocation(location),
                         builder:
