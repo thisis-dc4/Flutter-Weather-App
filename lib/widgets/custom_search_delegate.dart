@@ -57,8 +57,8 @@ class CustomSearchDelegate extends SearchDelegate {
       itemBuilder: (BuildContext context, int index) => ListTile(
         title: Text(resultList[index]['name']),
         onTap: () {
-          final location = LocationData(
-              resultList[index]['coord.lat'], resultList[index]['coord.lon']);
+          final location = LocationData(resultList[index]['coord.lat'],
+              resultList[index]['coord.lon'], resultList[index]['name']);
           // print(location.latitude);
           searchProvider.addLocation(location);
           close(context, null);
@@ -119,7 +119,8 @@ class CustomSearchDelegate extends SearchDelegate {
                       onTap: () {
                         final location = LocationData(
                             resultList[index]['coord.lat'],
-                            resultList[index]['coord.lon']);
+                            resultList[index]['coord.lon'],
+                            resultList[index]['name']);
                         // print(location.latitude);
                         searchProvider.addLocation(location);
                         close(context, null);

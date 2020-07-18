@@ -47,8 +47,8 @@ class WeatherProvider with ChangeNotifier {
       }
 
       _locationData = await location.getLocation();
-      final locData =
-          ld.LocationData(_locationData.latitude, _locationData.longitude);
+      final locData = ld.LocationData(
+          _locationData.latitude, _locationData.longitude, "Don't Know");
       await locationDataBox.add(locData);
     }
 
