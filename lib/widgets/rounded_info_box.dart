@@ -8,10 +8,6 @@ Widget roundedInfoBox(
 ) {
   final width = MediaQuery.of(context).size.width * 0.29;
   return Container(
-    decoration: BoxDecoration(
-      color: Theme.of(context).buttonColor,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
-    ),
     width: width,
     child: AspectRatio(
       aspectRatio: 1.1,
@@ -23,7 +19,10 @@ Widget roundedInfoBox(
             Icon(icon, size: 35),
             Opacity(
               opacity: 0.75,
-              child: Text(text),
+              child: Text(
+                text,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
             Text(
               number,

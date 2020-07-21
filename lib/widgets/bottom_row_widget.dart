@@ -12,15 +12,18 @@ class BottomRowWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          day.toUpperCase(),
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+        Opacity(
+          opacity: 0.73,
+          child: Text(
+            day,
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 13),
+          ),
         ),
         const Divider(height: 8),
         Icon(icon, size: 50.0),
         const Divider(height: 4),
         Text(
-          "$min\u{00B0} / $max\u{00B0}",
+          "$min\u00B0 / $max\u00B0",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather/exceptions/location_exception.dart';
 
 import 'package:weather/provider/hive_db_provider.dart';
 import 'package:weather/models/location_model.dart';
@@ -34,27 +35,33 @@ class WeatherProvider with ChangeNotifier {
     PermissionStatus _permissionGranted;
     LocationData _locationData;
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
+    try {
+      _serviceEnabled = await location.serviceEnabled();
       if (!_serviceEnabled) {
-        return;
+        _serviceEnabled = await location.requestService();
+        if (!_serviceEnabled) {
+          throw LocationException();
+        }
       }
-    }
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {}
-    }
+      _permissionGranted = await location.hasPermission();
+      if (_permissionGranted == PermissionStatus.denied) {
+        _permissionGranted = await location.requestPermission();
+        if (_permissionGranted != PermissionStatus.denied) {
+          throw LocationException();
+        }
+      }
 
-    _locationData = await location.getLocation();
-    final locData = LocationModel(
-      latitude: _locationData.latitude,
-      longitude: _locationData.longitude,
-      name: "Your City",
-    );
+      _locationData = await location.getLocation();
+      final locData = LocationModel(
+        latitude: _locationData.latitude,
+        longitude: _locationData.longitude,
+        name: "Your City",
+      );
 
-    await hiveDbProvider.addNewLocation(locData);
+      await hiveDbProvider.addNewLocation(locData);
+    } on LocationException catch (_) {
+      throw LocationException();
+    }
   }
 
   Future<void> fetchWeatherData() async {

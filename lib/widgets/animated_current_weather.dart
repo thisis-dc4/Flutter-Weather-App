@@ -61,7 +61,7 @@ class _AnimatedCurrentWeatherState extends State<AnimatedCurrentWeather>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          widget.toValue.toStringAsFixed(1) ?? '0',
+          widget.toValue.toStringAsFixed(0) ?? '0',
           style: textTheme.headline1.copyWith(fontWeight: FontWeight.bold),
         ),
       ],

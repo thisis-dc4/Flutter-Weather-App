@@ -45,8 +45,24 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(),
-        darkTheme: ThemeData.dark(),
+        theme: ThemeData.light().copyWith(
+          appBarTheme: AppBarTheme(
+            color: Colors.transparent,
+            elevation: 0.0,
+            actionsIconTheme: IconThemeData(
+              color: Colors.black,
+            ),
+          ),
+        ),
+        darkTheme: ThemeData.dark().copyWith(
+          appBarTheme: AppBarTheme(
+            color: Colors.transparent,
+            elevation: 0.0,
+            actionsIconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+          ),
+        ),
         home: HomePage(),
       ),
     );

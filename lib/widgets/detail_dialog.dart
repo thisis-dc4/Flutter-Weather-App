@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
-
 import 'package:weather/models/weather_model.dart';
 
 Future<void> detailDialog(
   BuildContext context,
-  Daily weatherData,
+  String day,
+  Temp temp,
   int index,
 ) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
-      String day = '';
-      if (index == 0) {
-        day = 'Today';
-      } else if (index == 1) {
-        day = 'Tommorow';
-      } else {
-        final temp = DateTime.fromMillisecondsSinceEpoch(weatherData.dt * 1000);
-        day = DateFormat.MMMEd().format(temp);
-      }
       return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(day),
+            ListTile(
+              title: Opacity(
+                opacity: 0.73,
+                child: Text(
+                  day,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
             Stack(
               alignment: Alignment.bottomCenter,
@@ -39,8 +35,8 @@ Future<void> detailDialog(
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    detailBottomRow(weatherData.temp.min.toString(), 'Min'),
-                    detailBottomRow(weatherData.temp.max.toString(), 'Max'),
+                    detailDialogRow(temp.min.toStringAsFixed(1), 'Min'),
+                    detailDialogRow(temp.max.toStringAsFixed(1), 'Max'),
                   ],
                 ),
               ],
@@ -48,10 +44,10 @@ Future<void> detailDialog(
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                detailBottomRow(weatherData.temp.morn.toString(), 'Morning'),
-                detailBottomRow(weatherData.temp.day.toString(), 'Day'),
-                detailBottomRow(weatherData.temp.eve.toString(), 'Evening'),
-                detailBottomRow(weatherData.temp.night.toString(), 'Night'),
+                detailDialogRow(temp.morn.toStringAsFixed(1), 'Morning'),
+                detailDialogRow(temp.day.toStringAsFixed(1), 'Day'),
+                detailDialogRow(temp.eve.toStringAsFixed(1), 'Evening'),
+                detailDialogRow(temp.night.toStringAsFixed(1), 'Night'),
               ],
             )
           ],
@@ -61,13 +57,26 @@ Future<void> detailDialog(
   );
 }
 
-Widget detailBottomRow(String temp, String day) {
+Widget detailDialogRow(String temp, String day) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10.0),
     child: Column(
       children: <Widget>[
-        Text(temp),
-        Text(day),
+        Opacity(
+          opacity: 0.73,
+          child: Text(
+            day.toUpperCase(),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          ),
+        ),
+        const Divider(height: 8),
+        Text(
+          '$temp\u00B0',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
       ],
     ),
   );
