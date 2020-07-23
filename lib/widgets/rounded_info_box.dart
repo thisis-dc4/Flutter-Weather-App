@@ -21,7 +21,7 @@ Widget roundedInfoBox(
               opacity: 0.75,
               child: Text(
                 text,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             Text(

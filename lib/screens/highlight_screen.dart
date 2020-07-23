@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:weather/custom_icons.dart';
 import 'package:weather/models/location_model.dart';
 import 'package:weather/models/weather_model.dart';
 import 'package:weather/provider/hive_db_provider.dart';
+import 'package:weather/screens/location_manager.dart';
 import 'package:weather/widgets/animated_current_weather.dart';
 import 'package:weather/widgets/bottom_row.dart';
 import 'package:weather/widgets/custom_search_delegate.dart';
@@ -34,6 +36,39 @@ class SummaryScreen extends StatelessWidget {
         ],
       ),
       extendBodyBehindAppBar: true,
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              margin: EdgeInsets.zero,
+              padding: EdgeInsets.zero,
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    bottom: 12.0,
+                    left: 16.0,
+                    child: Text(
+                      "WEATHER APP",
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyText1.color,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.location_city),
+              title: const Text('Locations'),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => LocationManager(),
+              )),
+            ),
+          ],
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

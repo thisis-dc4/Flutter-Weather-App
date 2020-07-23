@@ -49,7 +49,11 @@ class _MyAppState extends State<MyApp> {
           appBarTheme: AppBarTheme(
             color: Colors.transparent,
             elevation: 0.0,
+            textTheme: Theme.of(context).textTheme,
             actionsIconTheme: IconThemeData(
+              color: Colors.black,
+            ),
+            iconTheme: IconThemeData(
               color: Colors.black,
             ),
           ),

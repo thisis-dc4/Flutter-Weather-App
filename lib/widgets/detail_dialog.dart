@@ -22,7 +22,7 @@ Future<void> detailDialog(
                 opacity: 0.73,
                 child: Text(
                   day,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -66,13 +66,13 @@ Widget detailDialogRow(String temp, String day) {
           opacity: 0.73,
           child: Text(
             day.toUpperCase(),
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
           ),
         ),
         const Divider(height: 8),
         Text(
           '$temp\u00B0',
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),

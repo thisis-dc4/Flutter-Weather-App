@@ -19,7 +19,7 @@ class HiveDbProvider extends ChangeNotifier {
     return _items;
   }
 
-  Iterable<LocationModel> get allDataIterable => locationDataBox.values;
+  dynamic get allDataIterable => locationDataBox.values;
 
   int get length => locationDataBox.length;
 
@@ -27,8 +27,14 @@ class HiveDbProvider extends ChangeNotifier {
     return locationDataBox.getAt(index);
   }
 
+  Future<void> removeLocation(int index) async {
+    await locationDataBox.deleteAt(index);
+    notifyListeners();
+  }
+
   Future<void> addNewLocation(LocationModel location) async {
     await locationDataBox.add(location);
+    notifyListeners();
   }
 
   Future<String> loadFromAsset() async {

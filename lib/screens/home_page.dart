@@ -42,7 +42,6 @@ class HomePage extends HookWidget {
               ),
             ),
           );
-          // _showErrorDialog(snapshot.error.toString());
         }
         return Scaffold(
           body: SafeArea(

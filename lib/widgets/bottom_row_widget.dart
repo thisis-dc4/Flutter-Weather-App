@@ -24,7 +24,7 @@ class BottomRowWidget extends StatelessWidget {
         const Divider(height: 4),
         Text(
           "$min\u00B0 / $max\u00B0",
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
